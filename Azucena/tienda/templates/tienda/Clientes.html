@@ -1,0 +1,42 @@
+{% extends "tienda/base.html" %}
+{% block titulo %} Principal {% endblock %}
+{% block contenido %}
+    {% load static %}
+
+<h1>Lista de Clientes</h1>   
+<a type="button" class="btn btn-primary" href="{% url 'tienda:AgregarCliente' %}">Agregar </a>
+
+{% if clientes %}
+<ul>
+
+    <table class="table table-hover">
+        <thead>
+            <th class="bg-info">
+                Cliente
+            </th>
+            <th class=" bg-info text-center">
+                Opciones
+            </th>
+
+            {% for c in clientes %}
+            <tr>
+                <th scope="row">{{ c }}</th>
+                <th class="text-center">
+                    <a type="button" class="btn btn-success" href="{% url 'tienda:Tienda' c.id%}">Comprar</a>
+                    <a href="{% url 'tienda:deleteC' c.id %}" class="btn btn-danger">Eliminar</a>
+                    <a href="{% url 'tienda:showEdit' c.id %}" class="btn btn-warning">Editar</a>
+                </th>
+
+            </tr>
+
+
+            {% endfor %}
+        </thead>
+    </table>
+
+</ul>
+{%else %}
+No hay personas registradas
+{% endif %}
+
+{% endblock %}

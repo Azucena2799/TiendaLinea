@@ -1,0 +1,83 @@
+{% extends "tienda/base.html" %}
+{% block titulo %} Plantas {% endblock %}
+{% block contenido %}
+{% load static %}
+<div class="container">
+  <div class="row">
+    <div class="col-12 align-self-center">
+      <h1 class="display-1">TIENDA</h1>
+    </div>
+  </div>
+  {% if productos %}
+  <table class="table table-hover">
+    <thead>
+      <th style="background-color:#e63bad;">
+        Planta
+      </th>
+
+      {% for p in productos %}
+      <tr>
+        <th class="text-center">
+          <img src="{{ p.imagen.url }}" class="img-responsive" style="width: 10; float: left; margin-right: 10px;" />
+          <h5 class="card-title">{{p.nombre}}</h5>
+          <p class="card-text">{{p.precio}}</p>
+          <a href="#" class="btn btn-primary">Agregar al carrito</a>
+
+        </th>
+
+
+      </tr>
+      {% endfor %}
+    </thead>
+  </table>
+  <div class="alert alert-primary" role="alert">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="row" colspan="3" class="text-center">CARRITO</th>
+        </tr>
+        <tr>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">PRECIO</th>
+          <th scope="col">CANTIDAD</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% if request.session.carrito.items %}
+      {% for key, value in request.session.carrito.items %}
+        <tr>
+          <td>{{value.nombre}}</td>
+          <td>{{value.precio}}</td>
+          <td>{{value.acumulado}}
+            <a href="#" class="badge btn btn-dark badge-dark">+</a>
+            <a href="#" class="badge btn btn-dark badge-dark">-</a>
+          </td>
+        </tr>
+      {% endfor %}
+      {% else %}
+      <tr>
+          <td colspan="3">
+              <div class="alert alert-danger text-center"> Sin Productos </div>
+          </td>
+      </tr>
+      {% endif %}
+        <tr>
+          <th scope="row">Total:</th>
+          <td colspan="2">$ {{total_carrito}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <hr>
+    </div>
+    <div class="row text-center">
+        <div class="col-6"><a href="#" class="btn btn-danger">Limpiar</a></div>
+        <div class="col-6"><a href="#" class="btn btn-success">Guardar</a></div>
+    </div>
+</div>
+
+
+{%else %}
+No hay plantas registradas
+{% endif %}
+
+{% endblock %}
